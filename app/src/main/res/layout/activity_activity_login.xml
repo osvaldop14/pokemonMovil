@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.uninorte.pokemon.ActivityLogin">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pokebackg"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuario:"
+                android:id="@+id/textView"
+                android:textColor="#020202"
+                android:textSize="30dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contraseña:"
+                android:id="@+id/textView2"
+                android:textColor="#020202"
+                android:textSize="30dp"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/editText2"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:text="Ingresar"
+                android:onClick="Entrar"
+                android:id="@+id/button"
+                android:layout_gravity="center_horizontal" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Ok"
+                    android:onClick="ok"
+                    android:id="@+id/button3"
+                    android:visibility="invisible"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Back"
+                    android:onClick="Cancel"
+                    android:id="@+id/button4"
+                    android:visibility="invisible"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="152dp"
+                android:layout_height="wrap_content"
+                android:text="Registrar"
+                android:onClick="add_in_db"
+                android:id="@+id/button2"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioGroup
+                        android:id="@+id/Elige_Un_Pokemon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/EligeUnPokemon"
+                        android:orientation="horizontal"
+                        android:visibility="invisible">
+
+                        <RadioButton
+                            android:layout_width="50px"
+                            android:layout_height="wrap_content"
+                            android:text=""
+
+                            android:id="@+id/radioButton"
+                            android:layout_gravity="center_vertical"
+                            android:checked="false"
+                            android:layout_weight="1" />
+
+                        <RadioButton
+                            android:layout_width="50px"
+                            android:layout_height="wrap_content"
+                            android:text=""
+
+                            android:id="@+id/radioButton2"
+                            android:layout_gravity="center_vertical"
+                            android:checked="false"
+                            android:layout_weight="1" />
+
+                        <RadioButton
+                            android:layout_width="50px"
+                            android:layout_height="wrap_content"
+                            android:text=""
+
+                            android:id="@+id/radioButton3"
+                            android:layout_gravity="center_vertical"
+                            android:checked="false"
+                            android:layout_weight="1" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:visibility="visible">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/imageView"
+                                        android:src="@drawable/ep1"
+                                        android:layout_weight="1"
+                                        android:visibility="invisible" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/imageView2"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/ep2"
+                                        android:visibility="invisible" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/imageView3"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/ep3"
+                                        android:visibility="invisible"
+                                        android:longClickable="false" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                -->
+                    </LinearLayout>
+
+                </RelativeLayout>
