@@ -32,10 +32,9 @@
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar3"
-        android:background="#ed1111"
         android:layout_below="@+id/textView33"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -52,7 +51,7 @@
         android:layout_centerVertical="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Bulbasor"
         android:id="@+id/textView34"
@@ -66,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Atacar"
+        android:onClick="atk"
         android:id="@+id/button5"
         android:layout_alignBottom="@+id/imageView18"
         android:layout_alignParentRight="true"
@@ -73,10 +73,9 @@
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
-        android:background="#ed1111"
         android:layout_above="@+id/imageView19"
         android:layout_alignLeft="@+id/textView34"
         android:layout_alignStart="@+id/textView34" />

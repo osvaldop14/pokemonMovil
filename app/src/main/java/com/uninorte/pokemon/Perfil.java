@@ -25,8 +25,17 @@ public class Perfil extends AppCompatActivity {
         POK=new Select().from(UsuarioObjetos.class).queryList();
 
         t1.setText(POK.get(0).User);
-        t2.setText("LV: "+POK.get(0).UserLevel);
+        List<UsuariosPokemones> datos;
+        datos = new Select().from(UsuariosPokemones.class).queryList();
 
+        if(datos.size()>=0 && datos.size()<2) {
+            t2.setText("LV: "+1);//POK.get(0).UserLevel);
+        }
+        if(datos.size()>=2 && datos.size()<3) {
+            t2.setText("LV: " + 2);//POK.get(0).UserLevel);
+        } if(datos.size()>=3) {
+            t2.setText("LV: " + 3);//POK.get(0).UserLevel);
+        }
     }
 
     public void VerPokemones(View view) {

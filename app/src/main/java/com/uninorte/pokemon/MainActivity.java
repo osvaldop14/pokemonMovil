@@ -77,6 +77,9 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, ResultCallback<LocationSettingsResult>, OnMapReadyCallback {
 
+    String ds="0";
+
+    public final static int MI_REQUEST_CODE = 111;
     private MediaPlayer reproductor;
     private String TAG = "SampleGoogleApi";
     private GoogleApiClient mgoogleApiClient;
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     String U;
     String Latitudes[]=new String[10];
     String Longitudes[]=new String[10];
-    double X,Y;
+    double X,Y, distanciaMinima=50.0;
     int sw=0,w=0;
     Handler mhandler;
     PokeInformation date;
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     String[] Xx =new String[10];
     String[] Xxx =new String[10];
     double[] Xxy =new double[10];
+    double[] Xxy2 =new double[10];
 
 
     int swparapedirdistancias=0;
@@ -164,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     @Override
                     public void run() {
                         Distancias(X,Y);
+                        Distancias2(X,Y);
                         swparapedirdistancias=1;
                     }
                 },5000);
@@ -194,25 +199,44 @@ public void Distancias(double la,double lo)
     }
 
 }
-    public void llamarApeleaPokemon(){
+    public void Distancias2(double la,double lo)
+    {
+        List<DataUbicacionesPokeparadas> datos = null;
+        datos = new Select().from(DataUbicacionesPokeparadas.class).queryList();
+        double PI = 3.14159265358979323846;
+        double R = 6378.137;
+        for(int i=0;i<10;i++) {
+            Double la1 = Double.parseDouble(datos.get(i).Latitud);
+            Double lo1 = Double.parseDouble(datos.get(i).Longitud);
+            double dLat = PI * (la - la1) / 180;
+            double dLong = PI * (lo - lo1) / 180;
+
+            double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(PI * (la) / 180) * Math.cos(PI * (la1) / 180) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            Xxy2[i] = R * c*1000;
+            // Toast.makeText(this, "Mtros "+i, Toast.LENGTH_LONG).show();
+        }
+
+    }
+    public void llamarApeleaPokemon(String namePokemon,String pokemon){
         Intent s = new Intent(this,PeleaPokemon.class);
-        startActivity(s);
+        s.putExtra("POKEMON",pokemon);
+        s.putExtra("NamePokemon",namePokemon);
+        startActivityForResult(s, MI_REQUEST_CODE);
     }
 
-    public void Alerta() {
-        if (Xxy[0] < 30.0 || Xxy[1] < 30.0 || Xxy[2] < 30.0 || Xxy[3] < 30.0 || Xxy[4] < 30.0 || Xxy[5] < 30.0 || Xxy[6] < 30.0
-                || Xxy[7] < 30.0 || Xxy[8] < 30.0 || Xxy[9] < 30.0) {
-            //Toast.makeText(this, "Pokemon Cerca :p", Toast.LENGTH_LONG).show();
+    public void Alerta1(final String pokemon, final String namePokemon) {
 
             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
             dialogo1.setTitle("Pokemon Cerca :D");
-            dialogo1.setMessage("¿ Quiere Pelear con el Pokemon ?");
+            dialogo1.setMessage("¿ Quiere Pelear con el Pokemon "+pokemon+" ?");
             dialogo1.setCancelable(false);
             dialogo1.setPositiveButton("Go", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogo1, int id) {
                     Toast.makeText(getApplicationContext(), "Pelea Pelea  :p", Toast.LENGTH_LONG).show();
                     alerts=0;//iniciar actividad de pelea
-                   llamarApeleaPokemon();
+                   llamarApeleaPokemon(namePokemon,pokemon);
+                    dialogo1.cancel();
                 }
             });
             dialogo1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -222,7 +246,46 @@ public void Distancias(double la,double lo)
                 }
             });
             dialogo1.show();
-        }
+    }
+    public void Alerta2() {
+
+        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
+        dialogo1.setTitle("Pokeparada cerca :D");
+        dialogo1.setMessage("¿ Quiere ir a la pokeparada?");
+        dialogo1.setCancelable(false);
+        dialogo1.setPositiveButton("Go", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                alerts=0;//iniciar actividad de pelea
+                Toast.makeText(getApplicationContext(),"3 objetos recividos",Toast.LENGTH_SHORT).show();
+                List<UsuarioObjetos> POKES;
+                POKES=new Select().from(UsuarioObjetos.class).queryList();
+                    date1 = new UsuarioObjetos("Aimer","1","12","1","6","5","0","0","0","0","0","0","0");
+                    date1.save();
+                dialogo1.cancel();
+            }
+        });
+        dialogo1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                alerts=0;
+            }
+        });
+        dialogo1.show();
+    }
+    public void Alerta() {
+
+
+        if (Xxy2[0] < distanciaMinima){ Alerta2();}
+        if (Xxy2[9] <  distanciaMinima){ Alerta2();}
+        if (Xxy[0] <  distanciaMinima){ Alerta1(Xxx[0],Xx[0]);}
+        if (Xxy[1] <  distanciaMinima){ Alerta1(Xxx[1],Xx[1]);}
+        if (Xxy[2] <  distanciaMinima){ Alerta1(Xxx[2],Xx[2]);}
+        if (Xxy[3] <  distanciaMinima){ Alerta1(Xxx[3],Xx[3]);}
+        if (Xxy[4] <  distanciaMinima){ Alerta1(Xxx[4],Xx[4]);}
+        if (Xxy[5] <  distanciaMinima){ Alerta1(Xxx[5],Xx[5]);}
+        if (Xxy[6] <  distanciaMinima){ Alerta1(Xxx[6],Xx[6]);}
+        if (Xxy[7] <  distanciaMinima){ Alerta1(Xxx[7],Xx[7]);}
+        if (Xxy[8] <  distanciaMinima){ Alerta1(Xxx[8],Xx[8]);}
+        if (Xxy[9] <  distanciaMinima){ Alerta1(Xxx[9],Xx[9]);}
     }
 
     @Override
@@ -646,10 +709,30 @@ public void LocalizacionEmpezar()
                     }, 300000);
                 }
             MarcarUbicacion();
+            if(ds.compareTo("0")==0){
             if(swparapedirdistancias==1)
             {
                 Distancias(X,Y);
-                if (alerts==0){Alerta();alerts=1;}
+                Distancias2(X,Y);
+                if (alerts==0)
+                {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alerta();alerts=1;    }
+                    }, 5000);
+
+                }
+            }
+            }else
+            {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ds="1";
+                    }
+                }, 300000);
+
             }
 
         }
@@ -847,10 +930,12 @@ public void MarcarUbicacion()
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        switch (requestCode)
+        if(requestCode==MI_REQUEST_CODE && resultCode==RESULT_OK)
         {
-            case 1://REQUEST_CHECK_SETTINGS
+            ds= data.getStringExtra("NOMBRES");
+        }
+        if(requestCode==1)
+        {
                 switch (resultCode)
                 {case Activity.RESULT_OK:
                     if (mgoogleApiClient.isConnected()) {
@@ -870,7 +955,7 @@ public void MarcarUbicacion()
                         Toast.makeText(this,"disabled??",Toast.LENGTH_LONG).show();
                         break;
 
-                }break;
+                }
         }
 
     }

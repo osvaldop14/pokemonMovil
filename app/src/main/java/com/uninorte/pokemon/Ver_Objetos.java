@@ -36,11 +36,12 @@ public class Ver_Objetos extends AppCompatActivity {
 
         List<UsuarioObjetos> datos=null;
         datos = new Select().from(UsuarioObjetos.class).queryList();
+        int x=datos.size()-1;
 
-        t1.setText(datos.get(0).Pokebola);t2.setText(datos.get(0).SuperBall);t3.setText(datos.get(0).UltraBall);
-        t4.setText(datos.get(0).Pocion);t5.setText(datos.get(0).SuperPocion);t6.setText(datos.get(0).HiperPocion);
-        t7.setText(datos.get(0).PocionMaxima);t8.setText(datos.get(0).Revivir);t9.setText(datos.get(0).RevivirMaximo);
-        t10.setText(datos.get(0).Baya);t11.setText(datos.get(0).Huevo);t12.setText("∞");
+        t1.setText(datos.get(x).Pokebola);t2.setText(datos.get(x).SuperBall);t3.setText(datos.get(x).UltraBall);
+        t4.setText(datos.get(x).Pocion);t5.setText(datos.get(x).SuperPocion);t6.setText(datos.get(x).HiperPocion);
+        t7.setText(datos.get(x).PocionMaxima);t8.setText(datos.get(x).Revivir);t9.setText(datos.get(x).RevivirMaximo);
+        t10.setText(datos.get(x).Baya);t11.setText(datos.get(x).Huevo);t12.setText("∞");
 
 
     }
